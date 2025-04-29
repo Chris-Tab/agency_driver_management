@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from accounts import views as accounts_views
 from django.contrib.auth import views as auth_views
+from shifts import views as shifts_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,5 +31,8 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('dashboard/', accounts_views.company_dashboard, name='company_dashboard'),
+    path('shift/create/', shifts_views.shift_create, name='shift_create'),
+
+    
 
 ]

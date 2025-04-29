@@ -1,0 +1,10 @@
+<h2>Submit New Shift Request</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" name="save">Save</button>
+    <button type="submit" name="save_and_new">Save and New</button>
+    <a href="{% url 'company_dashboard' %}">Cancel</a>
+</form>
