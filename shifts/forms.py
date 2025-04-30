@@ -1,5 +1,7 @@
 from django import forms
+from django.utils import timezone
 from .models import ShiftRequest
+from .models import DriverHoliday
 
 class ShiftRequestForm(forms.ModelForm):
     class Meta:
@@ -8,14 +10,36 @@ class ShiftRequestForm(forms.ModelForm):
         widgets = {
             'start_datetime': forms.DateTimeInput(attrs={
                 'type': 'datetime-local',
-                'class': 'form-control',  # Optional, for styling
-                'placeholder': 'Choose date and time',
+                'class': 'form-control',
             }),
             'bonus': forms.NumberInput(attrs={'class': 'form-control'}),
             'extra_info': forms.Textarea(attrs={'class': 'form-control'}),
         }
-        # Optional: format if needed — in many cases this line is not required,
-        # Django will handle the datetime-local format automatically.
-        # But if you see format issues, uncomment the following:
-        
-        input_formats = {'start_datetime': ['%Y-%m-%dT%H:%M']}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Only set initial value if it's a new form (not editing an existing shift)
+        if not self.instance.pk:
+            now = timezone.now().replace(microsecond=0, second=0)
+            self.fields['start_datetime'].initial = now.strftime('%Y-%m-%dT%H:%M')
+
+class DriverHolidayForm(forms.ModelForm):
+    class Meta:
+        model = DriverHoliday
+        fields = ['start_date', 'end_date', 'notes']
+        widgets = {
+            'start_date': forms.DateInput(attrs={
+                'type': 'date',
+                'class': 'form-control'
+            }),
+            'end_date': forms.DateInput(attrs={
+                'type': 'date',
+                'class': 'form-control'
+            }),
+            'notes': forms.Textarea(attrs={
+                'rows': 2,
+                'class': 'form-control'
+            }),
+        }
+

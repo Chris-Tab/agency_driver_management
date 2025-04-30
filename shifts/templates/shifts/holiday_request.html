@@ -1,0 +1,21 @@
+<h2>Request Time Off</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <div style="margin-bottom: 10px;">
+    <label for="id_start_date">Start Date</label><br>
+    {{ form.start_date }}
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <label for="id_end_date">End Date</label><br>
+    {{ form.end_date }}
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <label for="id_notes">Notes (optional)</label><br>
+    {{ form.notes }}
+  </div>
+
+  <button type="submit">Submit Holiday</button>
+</form>
