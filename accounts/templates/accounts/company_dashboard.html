@@ -1,23 +1,23 @@
 <h2>Company Dashboard</h2>
-
 <p>Welcome, {{ request.user.username }}!</p>
 
-<div style="display: flex; gap: 40px;">
-  <!-- LEFT SIDE -->
+<div style="display: flex; gap: 60px; margin-top: 20px;">
+  <!-- LEFT: Submit New Shift -->
   <div style="flex: 1;">
-    <a href="{% url 'shift_create' %}">Submit New Shift Request</a>
-    <p>Use the link above to schedule a new shift.</p>
-
-    <!-- You can add more company-specific info here later -->
+    <h3>Submit a Shift</h3>
+    <p>
+      <a href="{% url 'shift_create' %}" style="font-weight: bold;">Submit New Shift Request</a>
+    </p>
+    <p>Create a new shift request including date, time, bonus, and details.</p>
   </div>
 
-  <!-- RIGHT SIDE -->
-  <div style="flex: 1;">
+  <!-- RIGHT: Submitted Shifts -->
+  <div style="flex: 2;">
     <h3>Your Submitted Shifts</h3>
     {% if company_shifts %}
       <ul>
         {% for shift in company_shifts %}
-          <li>
+          <li style="margin-bottom: 12px;">
             <strong>{{ shift.start_datetime|date:"Y-m-d H:i" }}</strong><br>
             {{ shift.extra_info|default:"No info" }}<br>
             <a href="{% url 'shift_view' shift.id %}">View</a> |
