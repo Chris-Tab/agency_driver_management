@@ -1,0 +1,8 @@
+<h2>Delete Shift</h2>
+<p>Are you sure you want to delete the shift on {{ shift.start_datetime }}?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete it</button>
+  <a href="{% url 'shift_create' %}">Cancel</a>
+</form>

@@ -1,0 +1,9 @@
+<h2>Shift Details</h2>
+
+<p><strong>Date:</strong> {{ shift.start_datetime }}</p>
+<p><strong>Bonus:</strong> {{ shift.bonus }}</p>
+<p><strong>Info:</strong> {{ shift.extra_info }}</p>
+
+<a href="{% url 'shift_edit' shift.id %}">Edit</a> |
+<a href="{% url 'shift_delete' shift.id %}">Delete</a> |
+<a href="{% url 'shift_create' %}">Back</a>

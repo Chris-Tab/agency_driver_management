@@ -28,11 +28,15 @@ urlpatterns = [
     path('signup/', accounts_views.company_signup, name='company_signup'),
 
     # Login and Logout
-    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html'), name='login'),
+    path('login/', accounts_views.custom_login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('dashboard/', accounts_views.company_dashboard, name='company_dashboard'),
     path('shift/create/', shifts_views.shift_create, name='shift_create'),
     path('driver/dashboard/', accounts_views.driver_dashboard, name='driver_dashboard'),
+    path('shift/<int:pk>/view/', shifts_views.shift_view, name='shift_view'),
+    path('shift/<int:pk>/edit/', shifts_views.shift_edit, name='shift_edit'),
+    path('shift/<int:pk>/delete/', shifts_views.shift_delete, name='shift_delete'),
+
     
 
 ]
