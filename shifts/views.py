@@ -5,7 +5,7 @@ from .forms import ShiftRequestForm
 @login_required
 def shift_create(request):
     if request.user.user_type != 'company':
-        return redirect('dashboard')  # Only companies can submit shift requests
+        return redirect('company_dashboard')  # Only companies can submit shift requests
 
     if request.method == 'POST':
         form = ShiftRequestForm(request.POST)

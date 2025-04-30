@@ -1,0 +1,17 @@
+<h2>Driver Dashboard</h2>
+
+<p>Welcome, {{ request.user.username }}!</p>
+
+<h3>Your Upcoming and Past Shifts:</h3>
+
+<ul>
+{% for shift in shifts %}
+    <li>
+        {{ shift.start_datetime }} - {{ shift.extra_info }}
+    </li>
+{% empty %}
+    <li>No shifts assigned yet.</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'logout' %}">Logout</a>

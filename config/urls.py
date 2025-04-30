@@ -32,7 +32,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('dashboard/', accounts_views.company_dashboard, name='company_dashboard'),
     path('shift/create/', shifts_views.shift_create, name='shift_create'),
-
+    path('driver/dashboard/', accounts_views.driver_dashboard, name='driver_dashboard'),
     
 
 ]
