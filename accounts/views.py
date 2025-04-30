@@ -19,9 +19,17 @@ def company_signup(request):
         form = UserCreationForm()
     return render(request, 'accounts/company_signup.html', {'form': form})
 
+
 @login_required
 def company_dashboard(request):
-    return render(request, 'accounts/company_dashboard.html')
+    if request.user.user_type != 'company':
+        return redirect('login')
+
+    company_shifts = ShiftRequest.objects.filter(company=request.user).order_by('-start_datetime')
+    return render(request, 'accounts/company_dashboard.html', {
+        'company_shifts': company_shifts
+    })
+
 
 @login_required
 def driver_dashboard(request):

@@ -2,7 +2,22 @@
 
 <p>Welcome, {{ request.user.username }}!</p>
 
-<a href="{% url 'shift_create' %}">Submit New Shift Request</a> | 
-<a href="{% url 'logout' %}">Logout</a>
+<a href="{% url 'shift_create' %}">Submit New Shift Request</a>
+<br><br>
 
-<!-- Later here we will show list of past bookings too -->
+<h3>Your Submitted Shifts</h3>
+{% if company_shifts %}
+  <ul>
+    {% for shift in company_shifts %}
+      <li>
+        <strong>{{ shift.start_datetime|date:"Y-m-d H:i" }}</strong><br>
+        {{ shift.extra_info|default:"No info" }}<br>
+        <a href="{% url 'shift_view' shift.id %}">View</a> |
+        <a href="{% url 'shift_edit' shift.id %}">Edit</a> |
+        <a href="{% url 'shift_delete' shift.id %}">Delete</a>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No shifts submitted yet.</p>
+{% endif %}
