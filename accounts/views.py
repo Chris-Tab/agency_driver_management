@@ -20,6 +20,40 @@ def company_signup(request):
     return render(request, 'accounts/company_signup.html', {'form': form})
 
 
+
+def custom_login(request):
+    form = AuthenticationForm(request, data=request.POST or None)
+
+    if request.method == 'POST':
+        print("Form Submitted")
+        print("Form Valid:", form.is_valid())
+        print("Errors:", form.errors)
+
+        if form.is_valid():
+            user = form.get_user()
+            print("User Found:", user)
+
+            login(request, user)
+
+            # ✅ Check user_type attribute
+            if hasattr(user, 'user_type'):
+                print("User Type:", user.user_type)
+                if user.user_type == 'company':
+                    return redirect('company_dashboard')
+                elif user.user_type == 'driver':
+                    return redirect('driver_dashboard')
+
+            # Optional: Redirect superuser/admins
+            if user.is_superuser:
+                return redirect('/admin/')
+
+            # Fallback if no user_type is set
+            return redirect('login')
+
+    return render(request, 'accounts/login.html', {'form': form})
+
+
+
 @login_required
 def company_dashboard(request):
     if request.user.user_type != 'company':
@@ -34,24 +68,7 @@ def company_dashboard(request):
 @login_required
 def driver_dashboard(request):
     if request.user.user_type != 'driver':
-        return redirect('login')  # Redirect unauthorized users
-
-    shifts = ShiftRequest.objects.filter(assigned_driver=request.user).order_by('-start_datetime')
-    return render(request, 'accounts/driver_dashboard.html', {'shifts': shifts})
+        return redirect('login')
+    return render(request, 'accounts/driver_dashboard.html')
 
 
-def custom_login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            if user.user_type == 'company':
-                return redirect('company_dashboard')
-            elif user.user_type == 'driver':
-                return redirect('driver_dashboard')
-            elif user.user_type == 'agency':
-                return redirect('/admin/')  # or a future agency dashboard
-    else:
-        form = AuthenticationForm()
-    return render(request, 'accounts/login.html', {'form': form})

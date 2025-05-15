@@ -36,3 +36,13 @@ class ShiftRequest(models.Model):
 
     def __str__(self):
         return f"Shift for {self.company.username} at {self.start_datetime}"
+    
+
+class DriverHoliday(models.Model):
+    driver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    notes = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.driver.username}: {self.start_date} to {self.end_date}"

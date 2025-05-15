@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .models import ShiftRequest
 from .forms import ShiftRequestForm
+from .models import DriverHoliday
+from .forms import DriverHolidayForm
 
 
 @login_required
@@ -48,6 +50,7 @@ def shift_edit(request, pk):
         'company_shifts': company_shifts,
     })
 
+
 @login_required
 def shift_delete(request, pk):
     shift = get_object_or_404(ShiftRequest, pk=pk, company=request.user)
@@ -57,3 +60,24 @@ def shift_delete(request, pk):
     
     # Optional: confirm deletion
     return render(request, 'shifts/shift_confirm_delete.html', {'shift': shift})
+
+
+@login_required
+def holiday_request(request):
+    if request.user.user_type != 'driver':
+        return redirect('login')
+
+    form = DriverHolidayForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        holiday = form.save(commit=False)
+        holiday.driver = request.user
+        holiday.save()
+        return redirect('driver_dashboard')
+
+    driver_holidays = DriverHoliday.objects.filter(driver=request.user).order_by('-start_date')
+
+    return render(request, 'shifts/holiday_request.html', {
+        'form': form,
+        'driver_holidays': driver_holidays
+    })

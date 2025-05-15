@@ -9,6 +9,12 @@
       <a href="{% url 'shift_create' %}" style="font-weight: bold;">Submit New Shift Request</a>
     </p>
     <p>Create a new shift request including date, time, bonus, and details.</p>
+   
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+      </form>
+      
   </div>
 
   <!-- RIGHT: Submitted Shifts -->

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'shifts',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,4 @@ AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_REDIRECT_URL = '/dashboard/'
 
+SESSION_COOKIE_SECURE = False
