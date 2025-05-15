@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <title>DriverPoint - A Driver Agency Agency</title>
+</head>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'images/driverpoint_logo.png' %}" alt="DriverPoint Logo" width="120" class="me-2">
+                DriverPoint
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
+
+
+<footer class="bg-light text-center text-muted py-3 mt-5 fixed-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-start">
+                <a href="{% url 'terms_of_use' %}" class="text-muted me-3">Terms of Use</a>
+                <a href="#" class="text-muted">Need Support? Please refer to our Knowledge Hub</a>
+            </div>
+            <div class="col-md-6 text-end">
+                © DriverPoint, All Rights Reserved
+            </div>
+        </div>
+    </div>
+</footer>
+

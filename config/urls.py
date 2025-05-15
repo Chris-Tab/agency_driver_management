@@ -32,7 +32,7 @@ urlpatterns = [
 
     # Login and Logout
     path('login/', accounts_views.custom_login, name='login'),
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', accounts_views.custom_logout, name='logout'),
     path('dashboard/', accounts_views.company_dashboard, name='company_dashboard'),
     path('shift/create/', shifts_views.shift_create, name='shift_create'),
     path('driver/dashboard/', accounts_views.driver_dashboard, name='driver_dashboard'),
@@ -40,7 +40,8 @@ urlpatterns = [
     path('shift/<int:pk>/edit/', shifts_views.shift_edit, name='shift_edit'),
     path('shift/<int:pk>/delete/', shifts_views.shift_delete, name='shift_delete'),
     path('driver/holidays/', shifts_views.holiday_request, name='holiday_request'),
-
+    path('terms/', accounts_views.terms_of_use, name='terms_of_use'),
+    
 
     
 

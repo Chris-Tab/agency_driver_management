@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -71,4 +71,10 @@ def driver_dashboard(request):
         return redirect('login')
     return render(request, 'accounts/driver_dashboard.html')
 
+def custom_logout(request):
+    if request.method == "POST" or request.method == "GET":
+        logout(request)
+        return redirect('login')
 
+def terms_of_use(request):
+    return render(request, 'accounts/terms_of_use.html')
