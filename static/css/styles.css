@@ -1,22 +1,23 @@
+
+.navbar-brand img {
+    max-height: 50px;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-menu {
+    min-width: 150px;
+}
+
+
+
 body, html {
     height: 100%;
     margin: 0;
     padding: 0;
 }
-footer {
-    background-color: #f8f9fa; /* Bootstrap light background */
-    border-top: 1px solid #dee2e6;
-}
-
-footer a {
-    text-decoration: none;
-}
-
-footer a:hover {
-    text-decoration: underline;
-}
-
-
 
 body {
     background-image: url('/static/images/login_bg.png');
@@ -87,4 +88,26 @@ body::before {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;  /* Ensures the background stays fixed when scrolling */
+}
+
+.footer-links-box {
+    background-color: rgba(255, 255, 255, 0.3);  /* light background with transparency */
+    border-radius: 12px;                        /* rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);   /* subtle drop shadow */
+    padding: 0.5rem 1.5rem;                       /* space inside */
+    backdrop-filter: blur(4px);                /* optional: frosted glass effect */
+}
+
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.spacer {
+    display: inline-block;
+    width: 2rem;  /* adjust the value as needed */
 }

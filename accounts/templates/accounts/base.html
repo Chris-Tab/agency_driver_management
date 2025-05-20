@@ -10,51 +10,71 @@
     <title>DriverPoint - A Driver Agency Agency</title>
 </head>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="{% static 'images/driverpoint_logo.png' %}" alt="DriverPoint Logo" width="120" class="me-2">
-                DriverPoint
-            </a>
+<body>
+    <!-- Logo -->
+    <div class="container-fluid py-2 px-4">
+        <a href="/" class="d-inline-block">
+            <img src="{% static 'images/driverpoint_logo.png' %}" alt="DriverPoint Logo" width="240">
+        </a>
+    </div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
-                        </li>
-                    {% endif %}
+    <!-- Navbar -->
+{% if request.user.is_authenticated and request.path != '/login/' %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light px-4">
+    <div class="container-fluid justify-content-between">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'images/driverpoint_logo.png' %}" alt="DriverPoint Logo" width="120">
+        </a>
+        <div class="d-flex align-items-center">
+            <span class="me-3">Hi, {{ request.user.username }}</span>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    ☰
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="{% url 'logout' %}">Logout</a></li>
                 </ul>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
+{% endif %}
+
 
     <!-- Main Content Area -->
     <div class="container">
         {% block content %}{% endblock %}
     </div>
 
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-</body>
-</html>
 
 
 <footer class="bg-light text-center text-muted py-3 mt-5 fixed-bottom">
     <div class="container">
         <div class="row">
             <div class="col-md-6 text-start">
-                <a href="{% url 'terms_of_use' %}" class="text-muted me-3">Terms of Use</a>
-                <a href="#" class="text-muted">Need Support? Please refer to our Knowledge Hub</a>
+                <div class="footer-links-box p-2 d-inline-block">
+                    <a href="{% url 'terms_of_use' %}" class="text-muted me-4">Terms of Use</a>
+                    <span class="spacer"></span>
+                    <a href="#" class="text-muted">Support: Knowledge Hub</a>
+                </div>
             </div>
             <div class="col-md-6 text-end">
-                © DriverPoint, All Rights Reserved
+                <span class="spacer"></span>
+                <small>© DriverPoint, All Rights Reserved</small>
             </div>
         </div>
     </div>
 </footer>
+
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>
 
