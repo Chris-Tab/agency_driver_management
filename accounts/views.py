@@ -2,7 +2,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
-from shifts.models import ShiftRequest  # Ensure this import exists
+from shifts.models import ShiftRequest
+from datetime import timedelta, date
+from django.utils import timezone
+import calendar
 
 
 
@@ -78,3 +81,27 @@ def custom_logout(request):
 
 def terms_of_use(request):
     return render(request, 'accounts/terms_of_use.html')
+
+
+def get_week_range(today):
+    start = today - timedelta(days=today.weekday())  # Monday
+    return [start + timedelta(days=i) for i in range(7)]
+
+def driver_dashboard(request):
+    today = timezone.now().date()
+    week = get_week_range(today)
+
+
+    week_days = []
+    for day in week:
+        week_days.append({
+            'date': day,
+            'weekday': calendar.day_name[day.weekday()],
+            'availability': False,  # Replace with actual logic
+            'is_today': day == today
+        })
+
+    return render(request, 'accounts/driver_dashboard.html', {
+        'week_days': week_days
+    })
+

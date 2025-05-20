@@ -1,37 +1,82 @@
-<h2>Driver Dashboard</h2>
+{% extends "accounts/base.html" %}
+{% load static %}
 
-<p>Welcome, {{ request.user.username }}!</p>
+{% block content %}
+<style>
+    body {
+        background-image: url("{% static 'images/bg_driver.jpg' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
 
-<h3>Your Upcoming and Past Shifts:</h3>
+    .calendar-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
 
-<ul>
-{% for shift in shifts %}
-    <li>
-        {{ shift.start_datetime }} - {{ shift.extra_info }}
-    </li>
-{% empty %}
-    <li>No shifts assigned yet.</li>
-{% endfor %}
-</ul>
+    .calendar-table {
+        width: 100%;
+    }
 
-<a href="{% url 'logout' %}">Logout</a>
+    .calendar-table th, .calendar-table td {
+        padding: 16px;
+        border: 1px solid #ddd;
+        vertical-align: middle;
+    }
 
-<a href="{% url 'holiday_request' %}">Request Holiday</a>
+    .calendar-table th {
+        background-color: #f9f9f9;
+        text-align: center;
+    }
 
-<footer class="bg-light text-center text-muted py-3 mt-5 fixed-bottom">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 text-start">
-                <div class="footer-links-box p-2 d-inline-block">
-                    <a href="{% url 'terms_of_use' %}" class="text-muted me-4">Terms of Use</a>
-                    <span class="spacer"></span>
-                    <a href="#" class="text-muted">Support: Knowledge Hub</a>
-                </div>
-            </div>
-            <div class="col-md-6 text-end">
-                <span class="spacer"></span>
-                <small>© DriverPoint, All Rights Reserved</small>
-            </div>
+    .availability-btn {
+        font-size: 0.9rem;
+        text-decoration: underline;
+        color: #007bff;
+        background: none;
+        border: none;
+    }
+
+    .week-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="container">
+    <div class="calendar-card">
+        <div class="week-nav">
+            <a href="#" class="btn btn-outline-secondary">&laquo; Previous week</a>
+            <h4>Work Calendar</h4>
+            <a href="#" class="btn btn-outline-secondary">Next week &raquo;</a>
         </div>
+
+        <table class="calendar-table table table-bordered text-center">
+            <tbody>
+                {% for day in week_days %}
+                    <tr class="{% if day.is_today %}today-highlight{% endif %}">
+                        <td style="width: 20%;">
+                            <strong>{{ day.weekday }}</strong><br>
+                            {{ day.date|date:"d M" }}
+                        </td>
+                        <td>
+                            {% if day.availability %}
+                                <span class="badge bg-success">Available</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Availability not set</span>
+                            {% endif %}
+                            <br>
+                            <button class="availability-btn">✎ Set availability</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
     </div>
-</footer>
+</div>
+{% endblock %}

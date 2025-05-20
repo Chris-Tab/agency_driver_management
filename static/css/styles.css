@@ -111,3 +111,50 @@ footer a:hover {
     display: inline-block;
     width: 2rem;  /* adjust the value as needed */
 }
+
+
+.availability-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background-color: #f8f9fa;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.day-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.date-label {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.set-availability {
+    color: #0d6efd;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.set-availability:hover {
+    text-decoration: underline;
+}
+
+.today-highlight {
+    background-color: #fff8dc;
+}
+
+.today-highlight {
+    background-color: rgba(0, 123, 255, 0.1);  /* Light blue */
+    border: 4px solid #00acc1; /* Teal border */
+    padding: 10px;
+    font-weight: bold;
+    color: #004d40;
+    border-radius: 10px;
+}
